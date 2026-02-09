@@ -1,79 +1,193 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2º Workshop de Regência</title>
+  <meta charset="UTF-8">
+  <title>2º Workshop de Regência</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --amarelo-creio: #f5c400;
+      --preto: #0f0f0f;
+      --cinza: #1c1c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #222, #000);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .background-notas {
+      position: fixed;
+      inset: 0;
+      background-image: url("https://i.imgur.com/2Q9Z1Zm.png");
+      opacity: 0.05;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: auto;
+      padding: 40px 20px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: var(--amarelo-creio);
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      opacity: 0.85;
+      margin-bottom: 25px;
+    }
+
+    .valor {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .valor span {
+      color: var(--amarelo-creio);
+      font-weight: 600;
+    }
+
+    form {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: #111;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    input[type="file"] {
+      background: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background: var(--amarelo-creio);
+      color: #000;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(245,196,0,0.5);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+  </style>
 </head>
 
 <body>
+<div class="background-notas"></div>
 
 <div class="container">
-  <div class="header">
-    <h1>2º Workshop de Regência</h1>
-    <p>Excelência, unidade e sensibilidade no altar</p>
+  <h1>2º Workshop de Regência</h1>
+  <p class="subtitulo">Evento para líderes, músicos e regentes</p>
+
+  <div class="valor">
+    Contribuição: <span>R$ 110,00</span>
   </div>
 
-  <div class="card">
-    <form id="form">
+  <form id="formInscricao">
+    <label>Nome e sobrenome</label>
+    <input required id="nome">
 
-      <div class="section-title">Informações pessoais</div>
+    <label>Telefone celular</label>
+    <input required id="telefone">
 
-      <label>Nome e sobrenome</label>
-      <input name="nome" required>
+    <label>Ministério</label>
+    <select id="ministerio">
+      <option value="">Selecione</option>
+      <option value="Belém">Belém</option>
+      <option value="Outros">Outros</option>
+    </select>
 
-      <label>Telefone celular</label>
-      <input name="telefone" required>
+    <input id="setor" class="hidden" placeholder="Informe o setor ou ministério">
 
-      <div class="section-title">Ministério</div>
+    <label>É regente de algum departamento?</label>
+    <select id="departamento">
+      <option>CREIO</option>
+      <option>UMADEB</option>
+      <option>UFADEB</option>
+      <option>Kids</option>
+      <option>Não sou regente</option>
+      <option>Outro</option>
+    </select>
 
-      <label>Ministério</label>
-      <select id="ministerio" required>
-        <option value="">Selecione</option>
-        <option value="Belém">Belém</option>
-        <option value="Outros">Outros</option>
-      </select>
+    <input id="outroDepartamento" class="hidden" placeholder="Informe o departamento">
 
-      <input id="setor" class="hidden" placeholder="Informe o setor ou ministério">
+    <label>Forma de pagamento</label>
+    <select id="pagamento">
+      <option>Pix</option>
+      <option>Cartão</option>
+    </select>
 
-      <div class="section-title">Função ministerial</div>
+    <label>Comprovante (Pix)</label>
+    <input type="file" id="comprovante">
 
-      <label>É regente de algum departamento?</label>
-      <select id="departamento" required>
-        <option value="">Selecione</option>
-        <option>CREIO</option>
-        <option>UMADEB</option>
-        <option>UFADEB</option>
-        <option>Kids</option>
-        <option>Não sou regente</option>
-        <option value="Outro">Outro departamento</option>
-      </select>
+    <button type="submit">Finalizar inscrição</button>
+  </form>
 
-      <input id="outroDepartamento" class="hidden" placeholder="Informe o departamento">
-
-      <div class="section-title">Pagamento — R$ 110,00</div>
-
-      <label>Forma de pagamento</label>
-      <select id="pagamento" required>
-        <option value="">Selecione</option>
-        <option value="Pix">Pix (1x)</option>
-        <option value="Cartao">Cartão de crédito</option>
-      </select>
-
-      <label id="labelComprovante" class="hidden">Envio do comprovante Pix</label>
-      <input type="file" id="comprovante" class="hidden">
-
-      <button type="submit">Confirmar inscrição</button>
-
-    </form>
-  </div>
-
-  <div class="footer-note">
-    “Tudo quanto tem fôlego louve ao Senhor.” — Salmos 150
-  </div>
+  <footer>
+    CREIO Belém • Ministério de Música
+  </footer>
 </div>
 
 <script src="script.js"></script>
