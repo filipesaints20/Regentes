@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbz_dPxW98x6t5Lzv6Hg8q1V2S3EA41cB1z3lxQO9OqzsWdtTncbI0NbY_-wkiGbcMzF/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwjKXNaziKPKLhtuXEnYCpVlwv75u7gBSyzJxTZ5E1-4q9KkHpMXHnqbKPP0qVj4jDk/exec";
 
 const form = document.getElementById("formInscricao");
 const ministerio = document.getElementById("ministerio");
