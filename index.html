@@ -6,130 +6,12 @@
 <title>2º Workshop de Regência</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --bg-dark: #0b0b0d;
-  --card: rgba(255,255,255,0.06);
-  --yellow: #f2c94c;
-  --text: #f5f5f5;
-  --muted: #bdbdbd;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #1a1a1d, var(--bg-dark));
-  color: var(--text);
-  min-height: 100vh;
-}
-
-.container {
-  max-width: 720px;
-  margin: auto;
-  padding: 50px 20px;
-  animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 45px;
-}
-
-.header h1 {
-  color: var(--yellow);
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.header p {
-  color: var(--muted);
-  font-size: .95rem;
-}
-
-.card {
-  background: var(--card);
-  backdrop-filter: blur(14px);
-  border-radius: 22px;
-  padding: 34px;
-  box-shadow: 0 30px 60px rgba(0,0,0,.45);
-}
-
-.section-title {
-  color: var(--yellow);
-  font-size: .95rem;
-  letter-spacing: .08em;
-  margin: 28px 0 12px;
-  text-transform: uppercase;
-}
-
-label {
-  font-size: .8rem;
-  color: var(--muted);
-  margin-top: 18px;
-  display: block;
-}
-
-input, select {
-  width: 100%;
-  padding: 13px;
-  margin-top: 6px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: .9rem;
-  transition: border .3s, box-shadow .3s;
-}
-
-input:focus, select:focus {
-  outline: none;
-  border-color: var(--yellow);
-  box-shadow: 0 0 0 2px rgba(242,201,76,.25);
-}
-
-.hidden { display: none; }
-
-button {
-  margin-top: 35px;
-  width: 100%;
-  padding: 15px;
-  font-size: .95rem;
-  background: linear-gradient(135deg, #f2c94c, #f7de83);
-  color: #111;
-  border: none;
-  border-radius: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform .25s, box-shadow .25s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(242,201,76,.4);
-}
-
-.footer-note {
-  text-align: center;
-  margin-top: 26px;
-  font-size: .75rem;
-  color: #888;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="container">
-
   <div class="header">
     <h1>2º Workshop de Regência</h1>
     <p>Excelência, unidade e sensibilidade no altar</p>
@@ -192,61 +74,9 @@ button:hover {
   <div class="footer-note">
     “Tudo quanto tem fôlego louve ao Senhor.” — Salmos 150
   </div>
-
 </div>
 
-<script>
-const apiURL = "https://script.google.com/macros/s/AKfycbzsQXMDyY-Q20INIgvu-8BZMreAkVNdQTd8QvHHQU1RCKkjXg1sXLUQKbgmsdQZohvt/exec";
-
-ministerio.onchange = () =>
-  setor.classList.toggle("hidden", !ministerio.value);
-
-departamento.onchange = () =>
-  outroDepartamento.classList.toggle("hidden", departamento.value !== "Outro");
-
-pagamento.onchange = () => {
-  const pix = pagamento.value === "Pix";
-  comprovante.classList.toggle("hidden", !pix);
-  labelComprovante.classList.toggle("hidden", !pix);
-};
-
-form.onsubmit = async e => {
-  e.preventDefault();
-
-  let base64 = "", nomeArq = "", tipoArq = "";
-
-  if (comprovante.files.length) {
-    const f = comprovante.files[0];
-    nomeArq = f.name;
-    tipoArq = f.type;
-    const r = new FileReader();
-    r.readAsDataURL(f);
-    await new Promise(res => r.onload = () => {
-      base64 = r.result.split(",")[1];
-      res();
-    });
-  }
-
-  await fetch(apiURL, {
-    method: "POST",
-    body: JSON.stringify({
-      nome: form.nome.value,
-      telefone: form.telefone.value,
-      ministerio: ministerio.value,
-      setor: setor.value,
-      departamento: departamento.value,
-      outroDepartamento: outroDepartamento.value,
-      pagamento: pagamento.value,
-      comprovanteBase64: base64,
-      comprovanteNome: nomeArq,
-      comprovanteTipo: tipoArq
-    })
-  });
-
-  alert("Inscrição enviada com sucesso!");
-  form.reset();
-};
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
+
