@@ -1,67 +1,62 @@
-const apiURL = "https://script.google.com/macros/s/AKfycbwSB1x33MtnOcsBzSp0b2XaidFkgX3NyYV8OB76crajC62t81wpTAKpjOabKOGLzdAB/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbz_dPxW98x6t5Lzv6Hg8q1V2S3EA41cB1z3lxQO9OqzsWdtTncbI0NbY_-wkiGbcMzF/exec";
 
-// Campos
-const form = document.getElementById("form");
+const form = document.getElementById("formInscricao");
 const ministerio = document.getElementById("ministerio");
 const setor = document.getElementById("setor");
 const departamento = document.getElementById("departamento");
 const outroDepartamento = document.getElementById("outroDepartamento");
-const pagamento = document.getElementById("pagamento");
-const comprovante = document.getElementById("comprovante");
-const labelComprovante = document.getElementById("labelComprovante");
 
-// Exibições condicionais
-ministerio.onchange = () =>
-  setor.classList.toggle("hidden", !ministerio.value);
-
-departamento.onchange = () =>
-  outroDepartamento.classList.toggle("hidden", departamento.value !== "Outro");
-
-pagamento.onchange = () => {
-  const pix = pagamento.value === "Pix";
-  comprovante.classList.toggle("hidden", !pix);
-  labelComprovante.classList.toggle("hidden", !pix);
+ministerio.onchange = () => {
+  setor.classList.toggle("hidden", ministerio.value === "");
 };
 
-// Envio do formulário
+departamento.onchange = () => {
+  outroDepartamento.classList.toggle("hidden", departamento.value !== "Outro");
+};
+
 form.onsubmit = async (e) => {
   e.preventDefault();
 
-  let base64 = "", nomeArq = "", tipoArq = "";
+  const file = comprovante.files[0];
+  let base64 = "", tipo = "", nomeArquivo = "";
 
-  if (comprovante.files.length) {
-    const file = comprovante.files[0];
-    nomeArq = file.name;
-    tipoArq = file.type;
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    await new Promise(resolve => {
-      reader.onload = () => {
-        base64 = reader.result.split(",")[1];
-        resolve();
-      };
-    });
+  if (file) {
+    tipo = file.type;
+    nomeArquivo = file.name;
+    base64 = await toBase64(file);
   }
 
   const payload = {
-    nome: form.nome.value,
-    telefone: form.telefone.value,
+    nome: nome.value,
+    telefone: telefone.value,
     ministerio: ministerio.value,
     setor: setor.value,
     departamento: departamento.value,
     outroDepartamento: outroDepartamento.value,
     pagamento: pagamento.value,
     comprovanteBase64: base64,
-    comprovanteNome: nomeArq,
-    comprovanteTipo: tipoArq
+    comprovanteTipo: tipo,
+    comprovanteNome: nomeArquivo
   };
 
-  await fetch(apiURL, {
+  const res = await fetch(API_URL, {
     method: "POST",
     body: JSON.stringify(payload)
   });
 
-  window.location.href = "sucesso.html";
+  const json = await res.json();
+
+  if (json.status === "ok") {
+    window.location.href = `sucesso.html?id=${json.id}`;
+  } else {
+    alert("Erro ao enviar inscrição");
+  }
 };
+
+function toBase64(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.readAsDataURL(file);
+  });
+}

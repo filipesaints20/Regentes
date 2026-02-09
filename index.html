@@ -1,156 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>2º Workshop de Regência</title>
+<meta charset="UTF-8">
+<title>2º Workshop de Regência</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --amarelo-creio: #f5c400;
-      --preto: #0f0f0f;
-      --cinza: #1c1c1c;
-    }
+<style>
+:root {
+  --amarelo: #f5c400;
+  --bg: #000;
+}
 
-    * {
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+* { box-sizing: border-box; font-family: Poppins, sans-serif; }
 
-    body {
-      margin: 0;
-      background: radial-gradient(circle at top, #222, #000);
-      color: #fff;
-      min-height: 100vh;
-    }
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #222, #000);
+  color: #fff;
+}
 
-    .background-notas {
-      position: fixed;
-      inset: 0;
-      background-image: url("https://i.imgur.com/2Q9Z1Zm.png");
-      opacity: 0.05;
-      z-index: 0;
-    }
+.container {
+  max-width: 720px;
+  margin: auto;
+  padding: 40px 20px;
+  animation: fade 1s ease;
+}
 
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 720px;
-      margin: auto;
-      padding: 40px 20px;
-      animation: fadeIn 1.2s ease;
-    }
+@keyframes fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; }
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+h1 {
+  text-align: center;
+  color: var(--amarelo);
+}
 
-    h1 {
-      color: var(--amarelo-creio);
-      font-size: 2.4rem;
-      text-align: center;
-      margin-bottom: 5px;
-    }
+.valor {
+  text-align: center;
+  margin-bottom: 25px;
+}
 
-    .subtitulo {
-      text-align: center;
-      opacity: 0.85;
-      margin-bottom: 25px;
-    }
+form {
+  background: rgba(255,255,255,0.05);
+  padding: 30px;
+  border-radius: 16px;
+}
 
-    .valor {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
+label { margin-top: 15px; display: block; }
 
-    .valor span {
-      color: var(--amarelo-creio);
-      font-weight: 600;
-    }
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #111;
+  color: #fff;
+}
 
-    form {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.4);
-    }
+.hidden { display: none; }
 
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 6px;
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      background: #111;
-      color: #fff;
-      font-size: 0.95rem;
-    }
-
-    input[type="file"] {
-      background: none;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    button {
-      margin-top: 30px;
-      width: 100%;
-      padding: 14px;
-      background: var(--amarelo-creio);
-      color: #000;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(245,196,0,0.5);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 25px;
-      font-size: 0.75rem;
-      opacity: 0.6;
-    }
-  </style>
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 14px;
+  background: var(--amarelo);
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
-<div class="background-notas"></div>
-
 <div class="container">
   <h1>2º Workshop de Regência</h1>
-  <p class="subtitulo">Evento para líderes, músicos e regentes</p>
-
-  <div class="valor">
-    Contribuição: <span>R$ 110,00</span>
-  </div>
+  <div class="valor">Contribuição: <strong>R$ 110,00</strong></div>
 
   <form id="formInscricao">
     <label>Nome e sobrenome</label>
-    <input required id="nome">
+    <input id="nome" required>
 
-    <label>Telefone celular</label>
-    <input required id="telefone">
+    <label>Telefone</label>
+    <input id="telefone" required>
 
     <label>Ministério</label>
     <select id="ministerio">
@@ -159,9 +94,9 @@
       <option value="Outros">Outros</option>
     </select>
 
-    <input id="setor" class="hidden" placeholder="Informe o setor ou ministério">
+    <input id="setor" class="hidden" placeholder="Informe setor ou ministério">
 
-    <label>É regente de algum departamento?</label>
+    <label>Departamento</label>
     <select id="departamento">
       <option>CREIO</option>
       <option>UMADEB</option>
@@ -182,12 +117,8 @@
     <label>Comprovante (Pix)</label>
     <input type="file" id="comprovante">
 
-    <button type="submit">Finalizar inscrição</button>
+    <button type="submit">Enviar inscrição</button>
   </form>
-
-  <footer>
-    CREIO Belém • Ministério de Música
-  </footer>
 </div>
 
 <script src="script.js"></script>
