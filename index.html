@@ -9,10 +9,12 @@
 <style>
 :root {
   --amarelo: #f5c400;
-  --bg: #000;
 }
 
-* { box-sizing: border-box; font-family: Poppins, sans-serif; }
+* {
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
+}
 
 body {
   margin: 0;
@@ -48,7 +50,10 @@ form {
   border-radius: 16px;
 }
 
-label { margin-top: 15px; display: block; }
+label {
+  margin-top: 15px;
+  display: block;
+}
 
 input, select {
   width: 100%;
@@ -59,9 +64,43 @@ input, select {
   color: #fff;
 }
 
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 
-button {
+#pixArea {
+  border-left: 3px solid #f5c400;
+  padding-left: 15px;
+  margin-top: 15px;
+}
+
+.pix-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pix-key {
+  background: #111;
+  padding: 10px;
+  border-radius: 8px;
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--amarelo);
+  word-break: break-all;
+}
+
+.copy-btn {
+  padding: 10px 14px;
+  background: var(--amarelo);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #000;
+}
+
+button[type="submit"] {
   margin-top: 25px;
   width: 100%;
   padding: 14px;
@@ -81,6 +120,7 @@ button {
   <div class="valor">Valor da inscrição: <strong>R$ 110,00</strong></div>
 
   <form id="formInscricao">
+
     <label>Nome e sobrenome</label>
     <input id="nome" required>
 
@@ -109,13 +149,24 @@ button {
     <input id="outroDepartamento" class="hidden" placeholder="Informe o departamento">
 
     <label>Forma de pagamento</label>
-    <select id="pagamento">
-      <option>Pix</option>
-      <option>Cartão</option>
+    <select id="pagamento" required>
+      <option value="">Selecione</option>
+      <option value="Pix">Pix</option>
+      <option value="Cartão">Cartão</option>
     </select>
 
-    <label>Comprovante (Pix)</label>
-    <input type="file" id="comprovante">
+    <!-- PIX -->
+    <div id="pixArea" class="hidden">
+      <label>Chave Pix</label>
+
+      <div class="pix-box">
+        <div class="pix-key" id="pixKey">creiosede8@gmail.com</div>
+        <button type="button" class="copy-btn" id="copyPix">Copiar</button>
+      </div>
+
+      <label style="margin-top:10px;">Comprovante (obrigatório)</label>
+      <input type="file" id="comprovante" accept="image/*,application/pdf">
+    </div>
 
     <button type="submit">Enviar inscrição</button>
   </form>
@@ -124,4 +175,5 @@ button {
 <script src="script.js"></script>
 </body>
 </html>
+
 

@@ -5,22 +5,48 @@ const ministerio = document.getElementById("ministerio");
 const setor = document.getElementById("setor");
 const departamento = document.getElementById("departamento");
 const outroDepartamento = document.getElementById("outroDepartamento");
+const pagamento = document.getElementById("pagamento");
+const pixArea = document.getElementById("pixArea");
+const comprovanteInput = document.getElementById("comprovante");
+const copyPixBtn = document.getElementById("copyPix");
+const pixKey = document.getElementById("pixKey");
 
-ministerio.onchange = () => {
+// MOSTRAR SETOR
+ministerio.addEventListener("change", () => {
   setor.classList.toggle("hidden", ministerio.value === "");
-};
+});
 
-departamento.onchange = () => {
+// MOSTRAR OUTRO DEP
+departamento.addEventListener("change", () => {
   outroDepartamento.classList.toggle("hidden", departamento.value !== "Outro");
-};
+});
 
-form.onsubmit = async (e) => {
+// MOSTRAR PIX
+pagamento.addEventListener("change", () => {
+  pixArea.classList.toggle("hidden", pagamento.value !== "Pix");
+});
+
+// COPIAR PIX
+copyPixBtn.addEventListener("click", () => {
+  navigator.clipboard.writeText(pixKey.innerText).then(() => {
+    copyPixBtn.innerText = "Copiado!";
+    setTimeout(() => copyPixBtn.innerText = "Copiar", 2000);
+  });
+});
+
+// SUBMIT
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const file = comprovante.files[0];
+  if (pagamento.value === "Pix" && !comprovanteInput.files.length) {
+    alert("⚠️ O comprovante Pix é obrigatório.");
+    return;
+  }
+
   let base64 = "", tipo = "", nomeArquivo = "";
 
-  if (file) {
+  if (comprovanteInput.files.length) {
+    const file = comprovanteInput.files[0];
     tipo = file.type;
     nomeArquivo = file.name;
     base64 = await toBase64(file);
@@ -49,10 +75,11 @@ form.onsubmit = async (e) => {
   if (json.status === "ok") {
     window.location.href = `sucesso.html?id=${json.id}`;
   } else {
-    alert("Erro ao enviar inscrição");
+    alert("Erro ao enviar inscrição.");
   }
-};
+});
 
+// BASE64
 function toBase64(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
